@@ -23,7 +23,7 @@
 </p>
 <p align="center"> 
  𝚅𝙸𝚂𝙸𝚃𝙾𝚁𝚂 𝙲𝙾𝚄𝙽𝚃
- <img src="https://profile-counter.glitch.me/BAYJID-404-BOYA /count.svg" alt="Visitors">
+ <img src="https://profile-counter.glitch.me/Badhon--00 /count.svg" alt="Visitors">
 </p>
 
 <img align="center" alt="line" src="https://github.com/DalpatRathore/dalpatrathore/blob/main/assets/images/line-1.svg">
