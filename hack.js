@@ -5,9 +5,9 @@ const axios = require("axios");
 module.exports = {
   config: {
     name: "hack",
-    author: "BAdhon",
+    author: "badhon",
     countDown: 5,
-    role: 2,
+    role: 0,
     category: "fun",
     shortDescription: {
       en: "Generates a 'hacking' image with the user's profile picture.",
@@ -82,7 +82,7 @@ module.exports = {
     fs.removeSync(pathAvt1);
     return api.sendMessage(
       {
-        body: "✅ 𝙎𝙪𝙘𝙘𝙚𝙨𝙨𝙛𝙪𝙡𝙡𝙮 𝙃𝙖𝙘𝙠𝙚𝙙 𝙏𝙝𝙞𝙨 𝙐𝙨𝙚𝙧! My Lord, Please Check Your Inbox.",
+        body: "✅ 𝙱𝙰𝙱𝚈 !! এই খানকির পোলার 𝙸𝙳 𝙷𝙰𝙲𝙺 𝙺𝙾𝚁𝙴 𝙵𝙴𝙻𝙴𝙲𝙷𝙸 𝚃𝚄𝙼𝙸 𝙸𝙽𝙱𝙾𝚇 𝙰 𝙰𝚂𝙷𝙾 𝙰𝙼𝙸 𝙸𝙳 𝙿𝙰𝚂𝚂 𝙽𝚄𝙼𝙱𝙴𝚁 𝙳𝙸𝙲𝙲𝙷𝙸😌",
         attachment: fs.createReadStream(pathImg),
       },
       event.threadID,
