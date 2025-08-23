@@ -70,7 +70,6 @@ module.exports = {
       
       const loadingMsg = await message.reply(loadingMessage);
       
-
       const videoUrl = videos[Math.floor(Math.random() * videos.length)];
       const randomMessage = hotMessages[Math.floor(Math.random() * hotMessages.length)];
 
@@ -84,22 +83,22 @@ module.exports = {
       const tempFilePath = path.join(__dirname, `temp_${Date.now()}.mp4`);
       const writer = fs.createWriteStream(tempFilePath);
       
+l
       response.data.pipe(writer);
+      
 
       await new Promise((resolve, reject) => {
         writer.on('finish', resolve);
         writer.on('error', reject);
       });
 
-      await message.unsend(loadingMsg.messageID);
-      await message.reply(randomMessage);
-      
-      const sentMsg = await message.reply({
-        body: "💦 𝗘𝗡𝗝𝗢𝗬 𝗧𝗛𝗜𝗦 𝗛𝗢𝗧 𝗖𝗟𝗜𝗣! 𝗗𝗢𝗡'𝗧 𝗙𝗢𝗥𝗚𝗘𝗧 𝗧𝗢 𝗦𝗔𝗬 𝗧𝗛𝗔𝗡𝗞 𝗕𝗔𝗗𝗛𝗢𝗡! 😘",
+
+      await api.unsendMessage(loadingMsg.messageID);
+      await message.reply({
+        body: randomMessage,
         attachment: fs.createReadStream(tempFilePath)
       });
-      
-      api.setMessageReaction("🥵", sentMsg.messageID, () => {}, true);
+
 
       fs.unlink(tempFilePath, (err) => {
         if (err) console.error("Error deleting temp file:", err);
@@ -107,43 +106,13 @@ module.exports = {
 
     } catch (error) {
       console.error("Error:", error);
+      message.reply("❌ | Sorry, something went wrong while processing your request.");
+      
 
-      try {
-        const fallbackVideo = videos[Math.floor(Math.random() * videos.length)];
-        const response = await axios({
-          method: 'get',
-          url: fallbackVideo,
-          responseType: 'stream',
-          timeout: 10000
-        });
-
-        const tempFilePath = path.join(__dirname, `temp_${Date.now()}.mp4`);
-        const writer = fs.createWriteStream(tempFilePath);
-        
-        response.data.pipe(writer);
-
-        await new Promise((resolve, reject) => {
-          writer.on('finish', resolve);
-          writer.on('error', reject);
-        });
-
-        await message.unsend(loadingMsg.messageID);
-        const randomMessage = hotMessages[Math.floor(Math.random() * hotMessages.length)];
-        await message.reply(randomMessage);
-        
-        const sentMsg = await message.reply({
-          body: "💦 𝗘𝗡𝗝𝗢𝗬 𝗧𝗛𝗜𝗦 𝗛𝗢𝗧 𝗖𝗟𝗜𝗣! 𝗗𝗢𝗡'𝗧 𝗙𝗢𝗥𝗚𝗘𝗧 𝗧𝗢 𝗦𝗔𝗬 𝗧𝗛𝗔𝗡𝗞 𝗕𝗔𝗗𝗛𝗢𝗡! 😘",
-          attachment: fs.createReadStream(tempFilePath)
-        });
-        
-        api.setMessageReaction("🥵", sentMsg.messageID, () => {}, true);
-
+      if (tempFilePath && fs.existsSync(tempFilePath)) {
         fs.unlink(tempFilePath, (err) => {
           if (err) console.error("Error deleting temp file:", err);
         });
-      } catch (fallbackError) {
-        console.error("Fallback error:", fallbackError);
-        message.reply("😿 Oops! Something went wrong. Please try again later.");
       }
     }
   }
