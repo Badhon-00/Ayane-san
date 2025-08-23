@@ -3,7 +3,7 @@ const fs = require('fs');
 module.exports = {
 	config: {
 		name: "file",
-		aliases: ["files"],
+		aliases: ["files", "Melissa"],
 		version: "1.0",
 		author: "BADHON",
 		countDown: 5,
@@ -17,17 +17,17 @@ module.exports = {
 	onStart: async function ({ message, args, api, event }) {
 		const permission = ["61571421696077","61557409693409",];
 		if (!permission.includes(event.senderID)) {
-			return api.sendMessage(" 𝐘𝐨𝐮 𝐝𝐨𝐧'𝐭 𝐡𝐚𝐯𝐞 𝐩𝐞𝐫𝐦𝐢𝐬𝐬𝐢𝐨𝐧 𝐭𝐨 𝐮𝐬𝐞 𝐭𝐡𝐢𝐬 𝐜𝐨𝐦𝐦𝐚𝐧𝐝. 🐤", event.threadID, event.messageID);
+			return api.sendMessage(" 𝙾𝙽𝙻𝚈 𝙱𝙰𝙳𝙷𝙾𝙽 𝙱𝙾𝚂𝚂 𝙷𝙰𝚅𝙴 𝙿𝙴𝚁𝙼𝙸𝚂𝚂𝙸𝙾𝙽 𝚃𝙾 𝚄𝚂𝙴 𝚃𝙷𝙸𝚂 𝙲𝙾𝙼𝙼𝙰𝙽𝙳!! 🐤", event.threadID, event.messageID);
 		}
 
 		const fileName = args[0];
 		if (!fileName) {
-			return api.sendMessage("𝐏𝐥𝐞𝐚𝐬𝐞 𝐩𝐫𝐨𝐯𝐢𝐝𝐞 𝐟𝐢𝐥𝐞 𝐧𝐚𝐦𝐞.🙂🦋", event.threadID, event.messageID);
+			return api.sendMessage("𝙾𝙸 𝙼𝚄𝚁𝙺𝙷𝙾 𝙵𝙸𝙻𝙴 𝙴𝚁 𝙽𝙰𝙼 𝚃𝙷𝙸𝙺𝙼𝙾𝚃𝙾 𝙻𝙴𝙺𝙷 😾🎀 ", event.threadID, event.messageID);
 		}
 
 		const filePath = __dirname + `/${fileName}.js`;
 		if (!fs.existsSync(filePath)) {
-			return api.sendMessage(`𝐅𝐢𝐥𝐞 𝐜𝐚𝐧'𝐭 𝐟𝐨𝐮𝐧𝐝🐸: ${fileName}.js`, event.threadID, event.messageID);
+			return api.sendMessage(`𝙰𝙸 𝙽𝙰𝙼𝙴 𝙰 𝙺𝙾𝙽𝙾 𝙵𝙸𝙻𝙴 𝙽𝙰𝙸 𝙱𝙰𝙱𝚈!! 🥺: ${fileName}.js`, event.threadID, event.messageID);
 		}
 
 		const fileContent = fs.readFileSync(filePath, 'utf8');
