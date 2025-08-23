@@ -2,7 +2,7 @@ module.exports = {
   config: {
     name: "de",
     aliases: ["del"],
-    author: "BaYjid",
+    author: "BaDhon",
 role: 2,
     category: "system"
   },
