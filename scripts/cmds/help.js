@@ -9,7 +9,7 @@ module.exports = {
     countDown: 5,
     role: 0,
     shortDescription: { en: "📖 View command usage" },
-    longDescription: { en: "📜 View command usage and list all commands
+    longDescription: { en: "📜 View command usage and list all commands" },
     category: "ℹ️ Info",
     guide: { en: "✦ {pn} [page] | {pn} [command] | {pn} -a [author] | {pn} -c [category]" },
     priority: 1,
@@ -18,7 +18,6 @@ module.exports = {
   onStart: async function ({ message, args, event, role, api }) {
     const { threadID, messageID } = event;
     const prefix = getPrefix(threadID);
-    
 
     if (!global.helpMessageIDs) {
       global.helpMessageIDs = {};
@@ -26,7 +25,6 @@ module.exports = {
     if (!global.helpMessageIDs[threadID]) {
       global.helpMessageIDs[threadID] = [];
     }
-    
 
     const previousMessages = global.helpMessageIDs[threadID] || [];
     for (const msgID of previousMessages) {
@@ -36,10 +34,9 @@ module.exports = {
 
       }
     }
-    
 
     global.helpMessageIDs[threadID] = [];
-    
+
     let filterAuthor = null;
     let filterCategory = null;
     let page = 1;
@@ -73,21 +70,18 @@ module.exports = {
 ┃ ✦ 𝗨𝘀𝗮𝗴𝗲: ${usage}
 ╰────「 𝗠𝗘𝗟𝗜𝗦𝗔 𝗕𝗕'𝗘 」───⦿`
       );
-      
-      
+
       global.helpMessageIDs[threadID].push(replyMsg.messageID);
-      
-      
+
       setTimeout(async () => {
         try {
           await api.unsendMessage(replyMsg.messageID);
-         
           global.helpMessageIDs[threadID] = global.helpMessageIDs[threadID].filter(id => id !== replyMsg.messageID);
         } catch (e) {
-          
+          // Error handling
         }
-      }, 60000); 
-      
+      }, 60000);
+
       return;
     }
 
@@ -129,13 +123,12 @@ module.exports = {
 
     const commandsPerPage = 20;
     const totalPages = Math.ceil(total / commandsPerPage);
-    
+
     if (page < 1) page = 1;
     if (page > totalPages) page = totalPages;
-    
+
     const startIndex = (page - 1) * commandsPerPage;
     const endIndex = Math.min(startIndex + commandsPerPage, total);
-    
 
     let msg = `╭━━━  -ღ´🦋𝗠𝗲𝗹𝗶𝘀𝗮🍒🥂  ━━━╮\n` +
               `┃ 🔰 Total Commands: ${total}\n` +
@@ -143,20 +136,20 @@ module.exports = {
               `┃ 📄 Page: ${page}/${totalPages}\n` +
               `╰━━━━━━━━━━━━━━━━━━━━━━╯\n\n` +
               `╭──「 𝗠𝗘𝗟𝗜𝗦𝗔 𝗕𝗕'𝗘 𝗛𝗘𝗟𝗣 𝗠𝗘𝗡𝗨 」─⦿\n`;
-    
+
     let count = 0;
     let displayed = 0;
     let currentCategory = "";
-    
+
     for (const category of Object.keys(categories).sort()) {
       const categoryCommands = categories[category];
-      
+
       if (count + categoryCommands.length > startIndex || 
           (count <= startIndex && count + categoryCommands.length >= startIndex)) {
-        
+
         for (const cmd of categoryCommands) {
           count++;
-          
+
           if (count > startIndex && count <= endIndex) {
             if (currentCategory !== category) {
               if (displayed > 0) {
@@ -165,45 +158,42 @@ module.exports = {
               msg += `┃ ✦ 📂 ${category.toUpperCase()}\n`;
               currentCategory = category;
             }
-            
+
             msg += `┃ ✦ ⚙️ ${cmd}\n`;
             displayed++;
           }
-          
+
           if (count >= endIndex) break;
         }
       } else {
         count += categoryCommands.length;
       }
-      
+
       if (count >= endIndex) break;
     }
-    
+
     msg += `┃\n`;
     msg += `┃ ✦ 📄 𝗣𝗮𝗴𝗲: ${page}/${totalPages}\n`;
     msg += `┃ ✦ 📊 𝗧𝗼𝘁𝗮𝗹: ${total} commands\n`;
-    
+
     if (totalPages > 1) {
       msg += `┃ ✦ 🔄 𝗨𝘀𝗲: ${prefix}help <page>\n`;
     }
-    
+
     msg += `╰───「 𝗠𝗘𝗟𝗜𝗦𝗔 𝗕𝗕'𝗘 」──⦿`;
-    
+
     const replyMsg = await message.reply(msg);
-    
-    
+
     global.helpMessageIDs[threadID].push(replyMsg.messageID);
-    
-    
+
     setTimeout(async () => {
       try {
         await api.unsendMessage(replyMsg.messageID);
-       
         global.helpMessageIDs[threadID] = global.helpMessageIDs[threadID].filter(id => id !== replyMsg.messageID);
       } catch (e) {
-        
+
       }
-    }, 60000); 
+    }, 60000);
   },
 };
 
